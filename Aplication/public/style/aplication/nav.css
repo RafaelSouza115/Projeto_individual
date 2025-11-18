@@ -5,7 +5,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 0;
+     padding: 20px 0;
+     
 }
 
 .logo-link {
@@ -14,7 +15,8 @@
 }
 
 .logo-link img {
-    height: 70px;
+     width: 70px;
+  height: auto;
 }
 
 .navbar {
@@ -52,13 +54,13 @@
 }
 
 .navbar a:hover {
-    color: #1A365B;
+    color: var(--vermelhao);
     transform: translateY(-3px);
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 #cadastro {
-    background-color: #0E294A;
+    background-color: var(--vermelhao);
     color: white;
     font-weight: 600;
     padding: 10px 20px;
@@ -69,7 +71,7 @@
 }
 
 #cadastro:hover {
-    background-color: #1A365B;
+    background-color: var(--Vermelho-Escuro);
     transform: translateY(-4px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }

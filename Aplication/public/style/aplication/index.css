@@ -1,8 +1,9 @@
 body {
     overflow: hidden;
     min-height: 100vh;
+    min-width: 100vw;
 
-    background-image: url('../../assets/imgs/elehome.png');
+    background-image: url('../../assets/imgs/fundohome.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -10,18 +11,29 @@ body {
 }
 
 .banner-hero {
-    width: 95%;
+    width: 92%;
     max-width: 1500px;
-    margin: 2% auto;
-
+    margin: 5% auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.banner-hero img {
+    width: 380px;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.banner-content{
+      width: 60%;
+    height: auto;
+    
+}
 
 .banner-content h1 {
-    color: #0E294A;
+    color: var(--vermelhao);
     font-size: 44px;
     font-weight: 700;
     line-height: 1.2;
@@ -39,7 +51,7 @@ body {
 
 
 .button-saiba-mais {
-    background-color: #0E294A;
+    background-color: var(--vermelhao);
     border: none;
     color: white;
     font-weight: 600;
@@ -54,6 +66,6 @@ body {
 }
 
 .button-saiba-mais:hover {
-    background-color: #1A365B;
+    background-color: var(--Vermelho-Escuro);
     color: white;
 }

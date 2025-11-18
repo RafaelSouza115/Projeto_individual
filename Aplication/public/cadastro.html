@@ -6,61 +6,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro | Rebobinando</title>
   <link rel="stylesheet" href="./style/aplication/cadastro.css">
-  <link rel="stylesheet" href="./style/aplication/global.css">
+  <link rel="stylesheet" href="./style/global.css">
 </head>
 
 <body>
   <a href="index.html">
-    <img src="assets/imgs/logoso.png" alt="Rebobinando Logo" class="logo">
+    <img src="./assets/icon/violao_upscayl_3x_digital-art-4x.png" alt="Rebobinando Logo" class="logo">
   </a>
   <div class="container">
-    <!-- Lado da imagem -->
-    <div class="image-side">
-      <img src="./assets/imgs/piaocadastro.png" alt="Logo Rebobinando Grande">
-    </div>
 
-    <!-- Lado do cadastro -->
     <div class="login-side">
-      <h2>Bem-vindo venha <span>Rebobinar!</span></h2>
+      <p class="tit">Bem-vindo venha <span>Rebobinar!</span></p>
       <p>Acompanhe sua cave de barris e a qualidade dos seus vinho no seu maior pontêncial!</p>
 
       <form class="formulario">
         <div class="input-group">
           <span>Nome</span>
-          <input type="text" placeholder="Digite seu nome...">
+          <input type="text" id="nome_input" oninput="validarNome()" placeholder="Digite seu nome...">
         </div>
 
         <div class="input-group">
           <span>Email</span>
-          <input type="email" placeholder="Digite o seu email...">
+          <input type="email" id="email_input" oninput="validarEmail()" placeholder="Digite o seu email...">
         </div>
 
         <div class="input-group">
           <span>Senha</span>
-          <input type="password" placeholder="Digite o sua senha...">
+          <input type="password" id="senha_input" oninput="validarSenha()" placeholder="Digite o sua senha...">
         </div>
 
         <div class="input-group">
           <span>Confirme a senha</span>
-          <input type="password" placeholder="Confirme sua senha...">
+          <input type="password" id="confirmacao_senha_input" oninput="validarConfirmaSenha()"
+            placeholder="Confirme sua senha...">
+        </div>
+        <div class="input-group">
+          <span>Escolha seu cantor favorito</span>
+          <select name="Preferencia" id="Preferencia">
+            <option value="#">Selecione...</option>
+            <option value="1">Arnaldo Antunes</option>
+            <option value="2">Carlinhos Brown</option>
+            <option value="3">Marisa Monte</option>
+          </select>
         </div>
 
-        <button onclick="cadastrar()" type="submit" class="botao">Cadastrar</button>
+        <button onclick="cadastrar()" type="button" class="botao">Cadastrar</button>
 
-        <p class="register">Já tem conta? <a href="./login.html">Entrar</a></p>
+        <div class="register">
+          Já tem conta? <a href="./login.html">Entrar</a>
+        </div>
       </form>
     </div>
   </div>
 </body>
 
 </html>
-
-
-
 <script>
+  //criando variaveis das validações 
 
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
+  function validarNome() {
+
+  }
+
+  function validarEmail() {
+
+  }
+
+  function validarSenha() {
+
+  }
+
+  function validarConfirmaSenha() {
+
+  }
 
   function cadastrar() {
     // aguardar();
@@ -71,16 +89,13 @@
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var codigoVar = codigo_input.value;
-    var idEmpresaVincular
 
     // Verificando se há algum campo em branco
     if (
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      codigoVar == ""
+      confirmacaoSenhaVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -90,19 +105,6 @@
       return false;
     } else {
       setInterval(sumirMensagem, 5000);
-    }
-
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-        finalizarAguardar();
-      }
     }
 
     // Enviando o valor da nova input
@@ -117,7 +119,6 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        idEmpresaVincularServer: idEmpresaVincular
       }),
     })
       .then(function (resposta) {
@@ -145,26 +146,6 @@
       });
 
     return false;
-  }
-
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
-
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
   }
 
   function sumirMensagem() {

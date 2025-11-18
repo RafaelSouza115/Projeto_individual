@@ -8,7 +8,7 @@
 
     <title>Rebobinando | Login</title>
 
-    <link rel="stylesheet" href="./style/aplication/global.css">
+    <link rel="stylesheet" href="./style/global.css">
     <link rel="stylesheet" href="./style/aplication/login.css">
     <script src="./js/sessao.js"></script>
 </head>
@@ -16,7 +16,7 @@
 <body>
     <header>
         <a href="index.html">
-            <img src="assets/imgs/logoso.png" alt="Rebobinando Logo" class="logo">
+            <img src="./assets/icon/violao_upscayl_3x_digital-art-4x.png" alt="Rebobinando Logo" class="logo">
         </a>
     </header>
 
@@ -28,14 +28,9 @@
         </div>
 
         <div class="container">
-            <section class="image-side">
-
-                <img src="assets/imgs/meninologin.png" alt="Pessoa degustando vinho">
-
-            </section>
             <div class="card card-login login-side">
                 <h2>Bem-vindo de volta ao <span>Rebobinando!</span></h2>
-                <p>Acompanhe sua cave de barris e a qualidade dos seus vinho no seu maior pontêncial!</p>
+                <p>Faça login para acessar sua conta e continuar sua experiência.</p>
 
                 <div class="formulario">
                     <div class="input-group">
@@ -55,7 +50,8 @@
                 <div id="div_erros_login"></div>
 
                 <div class="register">
-                    Não tem conta? <a href="cadastro.html">Registre-se</a> </div>
+                    Não tem conta? <a href="cadastro.html">Registre-se</a>
+                </div>
             </div>
         </div>
     </div>
@@ -108,7 +104,7 @@
                     sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
 
                     setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
+                        window.location = "./dashboard/dash.html";
                     }, 1000); // apenas para exibir o loading
 
                 });

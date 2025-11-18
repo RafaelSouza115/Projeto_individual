@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+/* --- Estilos Gerais --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+
+}
+
+:root {
+    --vermelhao: #4A0000;
+    --Vermelho-Escuro: #CC0000;
+    --Vermelho-vivo: #FF2400;
+    --Vermelho-vibrante: #FF6B6B;
+    --Vermelho-suave: #FFA07A;
+    --rosa-claro: #FFD2D2;
+    --cor-de-destaque: #FFEDED;
+    --Cor-de-fundo-da-pagina: #F5F5F5;
+}

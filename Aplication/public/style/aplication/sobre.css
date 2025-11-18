@@ -1,49 +1,55 @@
 body {
-  overflow: hidden;
-  min-height: 100vh;
-  background-image: url('../../assets/imgs/elesobre.png');
+  background-image: url('../../assets/imgs/fundosobre.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
+
+   overflow: hidden;
+   min-height: 100vh;
 }
+.header .container {
+   padding: 20px 0; /* Ou o mesmo valor usado no nav.css */
+}
+
 
 .NossaMissao .container {
   max-width: 1200px;
-  margin: auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   /* muda de linha pra coluna */
 }
 
-.NossaMissao h1 {
-  font-size: 42px;
+.p_container{
+  font-size: 4rem;
   font-weight: 700;
-  color: var(--azul-vivido1);
-  margin-bottom: 20px;
-  border-bottom: 4px solid var(--azul-vivido1);
-  display: inline-block;
-  padding-bottom: 10px;
+  color: var(--Vermelho-vivo);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+
+  max-width: 400px;
+  margin: 0 auto 1px auto;
 }
 
-.NossaMissao p {
+.p_desc{
   font-size: 20px;
   color: #444;
-  margin-bottom: 60px;
-  line-height: 1.7;
+  margin-bottom: 20px;
 }
 
 .divisao {
   display: flex;
-  justify-content: baseline;
+  justify-content: center;
+  align-items: flex-start;
   gap: 35px;
+
 }
 
 .info {
   background-color: #f5f5f5;
   border-radius: 15px;
   padding: 10px 20px;
+  height: 300px;
   width: 300px;
   text-align: center;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -64,8 +70,9 @@ body {
 
 .info h3 {
   font-size: 20px;
-  color: var(--azul-vivido1);
+  color: var(--Vermelho-vivo);
   margin-bottom: 10px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .info p {
