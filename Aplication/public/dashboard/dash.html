@@ -3,23 +3,383 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/dash/dashboards.css">
-    <link rel="stylesheet" href="../style/dash/nav.css">
+
     <title> Rebobinando | home</title>
 
 </head>
-    
-<body>
-    <nav>
-        <li>
-            <a href="dash.html"> Home</a>
-        </li>
-        <li>
-            <a href="quiz.html"> Quiz</a>
-        </li>
-    </nav>
+
+<body onload="rank(), obterDadosRosquinha(), obterDadosLinha()">
+
+    <div class="principal">
+        <div class="Ola">
+            <div id="divOla" class="divOla">
+            </div>
+        </div>
+        <div class="header">
+            <div class="kpi-row">
+                <!-- <div class="cont1"> -->
+                <div class="kpi">
+                    <div class="kpi-title">quantidade dos ultimos acertos</div><br>
+                    <div id="idAcertos" class="kpi-value temperatura"></div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-title">Quantidade de tentativas</div><br>
+                    <div id="Tentativas" class="kpi-value temperatura"></div>
+                </div>
+                <!-- </div> -->
+                <!-- <div class="cont2"> -->
+                <div class="kpi">
+                    <div class="kpi-title">Pontuação</div><br>
+                    <div id="idUsuario" class="kpi-value temperatura"></div>
+                </div>
+                <div class="kpi">
+
+                    <div class="kpi-title">Rank</div><br>
+                    <div id='rankUsuario' class="kpi-value temperatura"></div>
+                </div>
+                <!-- </div> -->
+            </div>
+
+        </div>
+        <div class="meio">
+
+            <!-- <div class="graficos"> -->
+            <div class="grafico1">
+                <canvas id="linha"></canvas>
+            </div>
+            <!-- </div> -->
+
+            <div class="grafico3">
+                <canvas id="rosquinha"></canvas>
+            </div>
+        </div>
+
+        <nav>
+            <li><a href="dash.html">Home</a></li>
+            <li><a href="quiz.html">Quiz</a></li>
+        </nav>
+
+    </div>
+
 </body>
+<script>
+
+    const nome = sessionStorage.NOME_USUARIO;
+
+    document.getElementById("divOla").innerHTML = `<p>Olá ${nome}, seja bem-vindo! <br> é aqui que você testa seu conhecimento sobre os tribalistas.</p>`;
+
+
+    function obterDadosRosquinha() {
+        fetch('/obterDados/obterPref', {
+            method: "POST"
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("estou no then do preferencia");
+                plotarGraficoRosquinha(data);
+            })
+            .catch(err => {
+                console.log("estou no catch do preferencia");
+                console.log(err);
+            });
+    }
+
+    function plotarGraficoRosquinha(data) {
+
+        // Separando os rótulos (labels) e os dados dos votos
+        var cantor = [];
+        var quantidade = [];
+
+        // Preenchendo os arrays com os dados
+        for (var i = 0; i < data.length; i++) {
+            cantor.push(data[i].cantor);
+            quantidade.push(data[i].quantidade);
+        }
+
+        // Capturando o elemento canvas pelo id 
+        var ctx = document.getElementById('rosquinha').getContext('2d');
+        // Criando o gráfico de linha usando o Chart.js
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: cantor,
+                datasets: [{
+                    label: 'Votos',
+                    data: quantidade,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+
+    }
+    // Função para plotar o gráfico de linha
+
+
+
+    function rank() {
+        var id = sessionStorage.ID_USUARIO
+
+        // fetch que puxa a pontuação do usuario
+        fetch("/obterDados/obterDados", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id
+            }),
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (dados) {
+                        dados.forEach(j => {
+                            idUsuario.innerHTML = `${j.pontuacao}`;
+                        });
+                    })
+                } else {
+                    console.error('nenhum dado')
+                }
+
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        // fetch que puxa a posição do usuario no rank de pontos 
+        fetch("/obterDados/obterRank", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id
+            }),
+        })
+
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (dados) {
+                        dados.forEach(j => {
+                            console.log("Posição retornada →", j.posicao);
+                            rankUsuario.innerHTML = `${j.posicao}`
+                        });
+                    })
+                } else {
+                    console.error('nenhum dado rank')
+                }
+
+            })
+            .catch(function (response) {
+                console.log(`#ERRO: ${response}`);
+            });
+
+        //fetch para pegar a quantidade dos ultimos acertos do usuario
+        fetch("/obterDados/obterAcertos", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id
+            }),
+        })
+
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (dados) {
+                        dados.forEach(j => {
+                            console.log("Posição retornada →", j.acertos[0]);
+                            idAcertos.innerHTML = dados[0].acertos
+                        });
+                    })
+                } else {
+                    console.error('nenhum dado rank')
+                }
+
+            })
+            .catch(function (response) {
+                console.log(`#ERRO: ${response}`);
+            });
+
+        //fetch para pegar a quantidade dos ultimos acertos do usuario
+        fetch("/obterDados/obterTentativa", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id
+            }),
+        })
+
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (dados) {
+                        dados.forEach(j => {
+
+                            console.log("Posição retornada →", j.tentativa);
+                            Tentativas.innerHTML = `${j.tentativa}`
+                        });
+                    })
+                } else {
+                    console.error('nenhum dado rank')
+                }
+
+            })
+            .catch(function (response) {
+                console.log(`#ERRO: ${response}`);
+            });
+
+
+
+        return false;
+    }
+
+    function obterDadosLinha() {
+
+        var id = sessionStorage.ID_USUARIO
+
+        fetch('/obterDados/obterHistorico', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id
+            }),
+        })
+            .then(response => response.json())
+        .then(dados => {
+            console.log("estou no then do historico");
+            plotarGraficoLinha(dados);
+        })
+        .catch(err => {
+            console.log("estou no catch do historico");
+            console.log(err);
+        });
+    }
+
+    function plotarGraficoLinha(dados) {
+
+        // Separando os rótulos (labels) e os dados dos votos
+        var id = [];
+        var acertos = [];
+        var tentativa = 0
+        // Preenchendo os arrays com os dados
+        for (var i = 0; i < dados.length; i++) {
+            tentativa++
+            id.push(tentativa);
+            acertos.push(dados[i].acertos);
+        }
+
+        // Capturando o elemento canvas pelo id 
+        var ctx = document.getElementById('linha').getContext('2d');
+        // Criando o gráfico de linha usando o Chart.js
+        var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: id,
+        datasets: [{
+            label: 'Tentativas',
+            data: acertos,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                title: {
+                    display: true,
+                    text: 'Acertos' 
+                }
+            }
+        }
+    }
+});
+
+    }
+
+
+    // Função chamada ao carregar a página para obter e processar os dados
+    // function obterDados() {
+    //     // Aqui seria a função que obteria os dados do banco de dados
+    //     // No caso, aqui você colocaria o fetch que teria o endereço da sua rota que você criou na pasta /routes e chamaria a função plotarGraficoLinha nessa função. Exemplo:
+
+    //     // fetch('/obterDados')
+    //     //     .then(function (response) {
+    //     //         return response.json();
+    //     //     })
+    //     //     .then(function (data) {
+    //     //         plotarGraficoRosquinha(data);
+    //     //     })
+    //     //     .catch(function (err) {
+    //     //         console.log(err);
+    //     //     })
+
+    //     // Como eu não configurei as rotas, eu criei um array com os dados para simular a obtenção dos dados
+    //     var dados = [{
+    //         jogador: 'Endrick',
+    //         votos: 10
+    //     },
+    //     {
+    //         jogador: 'João',
+    //         votos: 5
+    //     },
+    //     {
+    //         jogador: 'Maria',
+    //         votos: 15
+    //     },
+    //     {
+    //         jogador: 'José',
+    //         votos: 20
+    //     },
+    //     {
+    //         jogador: 'Pedro',
+    //         votos: 25
+    //     },
+    //     {
+    //         jogador: 'Ana',
+    //         votos: 30
+    //     }]
+    //     // Chamando a função para plotar o gráfico de linha com os dados
+    //     plotarGraficoLinha(dados);
+
+        // fetch('/obterPref')
+        //     .then(function (response) {
+        //         return response.json();
+        //     })
+        //     .then(function (data) {
+        //         plotarGraficoRosquinha(data);
+        //     })
+        //     .catch(function (err) {
+        //         console.log(err);
+        //     })
+        // // Chamando a função para plotar o gráfico de barra com os dados
+        // plotarGraficoRosquinha(data)
+
+    // }
+</script>
 
 </html>

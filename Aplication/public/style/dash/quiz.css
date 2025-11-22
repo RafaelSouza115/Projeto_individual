@@ -1,6 +1,147 @@
 body {
     display: flex;
     justify-content: center;
+    align-items: center;
     height: 100vh;
     width: 100vw;
+
+    background-image: url('../../assets/imgs/fundolongincasd_upscayl_2x_upscayl-standard-4x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+
+    font-family: 'Poppins', sans-serif;
+    color: #212427;
+}
+
+
+.principal {
+    width: 85%;
+    height: 80%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    border-radius: 15px;
+    background-color: var(--fundo);
+    position: relative
+}
+
+
+
+
+nav {
+    width: 60%;
+    height: 8%;
+    border: black;
+    border-radius: 15px;
+    background-color: var(--botao);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    align-self: center;
+    margin-top: 10px;
+
+}
+
+nav a {
+    color: var(--fundo-div);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+nav a:hover {
+    transform: translateY(-5px);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.tabela-rank {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Cabeçalho */
+.tabela-rank thead {
+    background: var(--botao);
+    color: var(--fundo-div);
+    font-size: 18px;
+}
+
+.tabela-rank th {
+    padding: 12px;
+    text-align: left;
+}
+
+/* Linhas */
+.tabela-rank td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+}
+
+/* Linha zebra */
+.tabela-rank tr:nth-child(even) {
+    background: var(--rosa-claro);
+}
+
+/* Efeito hover */
+.tabela-rank tr:hover {
+    background: var(--Vermelho-suave);
+    transition: 0.2s;
+}
+
+/* Ajusta pontuação para alinhar à direita (opcional) */
+.tabela-rank td:last-child,
+.tabela-rank th:last-child {
+    text-align: right;
+}
+
+
+
+
+.container_id1 {
+    display: flex;
+    justify-content: space-between;
+    gap: 60px;
+    flex-direction: row;
+}
+
+.container-box1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#btnIniciarQuiz {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--botao);
+    color: white;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+    max-height: 300px;
+    max-width: 300px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+}
+
+#btnIniciarQuiz:hover {
+    background-color: var(--trans-botao);
+    transform: scale(1.05);
 }

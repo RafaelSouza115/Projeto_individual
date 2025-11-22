@@ -1,6 +1,126 @@
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+  width: 100vw;
+
+  background-image: url('../../assets/imgs/fundolongincasd_upscayl_2x_upscayl-standard-4x.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.principal {
+  width: 90%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: var(--fundo);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.kpi-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 60px;
+  margin-bottom: 25px;
+}
+
+.kpi {
+  background: #fffaf7;
+  border-radius: 12px;
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.08);
+}
+
+.Ola{
+  background: #fffaf7;
+  max-height: 80px;
+  border-radius: 12px;
+  flex: 1;
+  display: flex;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.08);
+}
+
+.divOla{
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.divOla p{
+  display: flex;
+  margin-left: 2%;
+  height: 100%;
+  width: 100%;
+}
+
+/* .graficos {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  width: 60%;
+  height: 100%;
+} */
+
+.grafico1 {
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  width: 40%;
+  height: 300px;
+}
+
+.grafico3 {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  height: 300px;
+}
+
+.meio {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-evenly;
+}
+
+nav {
+    width: 60%;
+    height: 8%;
+    border: black;
+    border-radius: 15px;
+    background-color: var(--botao);
+
     display: flex;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
+    align-items: center;
+    justify-content: space-around;
+    align-self: center;
+    margin-top: 10px;
+
+}
+
+nav a {
+    color: var(--fundo-div);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+nav a:hover {
+    transform: translateY(-5px);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }

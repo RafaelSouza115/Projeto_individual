@@ -67,6 +67,7 @@ body {
 }
 
 #btnProxima,
+#btnVoltar,
 #btnReiniciar {
     margin-top: 25px;
     padding: 12px 30px;
@@ -87,4 +88,11 @@ body {
 
 #painelFinal {
     text-align: center;
+}
+
+.bts{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: center;
 }

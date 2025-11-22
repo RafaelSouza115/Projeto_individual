@@ -23,7 +23,8 @@ function autenticar(req, res) {
                             nome: resultadoAutenticar[0].nome,
                             senha: resultadoAutenticar[0].senha,
                         });
-                    }else if (resultadoAutenticar.length == 0) {
+
+                    } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
                         res.status(403).send("Mais de um usuário com o mesmo login e senha!");
@@ -45,6 +46,7 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
+    var pref = req.body.preferenciaServer
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -54,12 +56,15 @@ function cadastrar(req, res) {
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
     } else {
+        console.log("oi bb " + pref)
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha)
+        usuarioModel.cadastrar(nome, email, senha, pref)
             .then(
                 function (resultado) {
                     res.json(resultado);
+                    console.log("foi bb" + pref)
+
                 }
             ).catch(
                 function (erro) {

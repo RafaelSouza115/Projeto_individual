@@ -62,7 +62,7 @@
     // Seus scripts JavaScript aqui
     function entrar() {
         // Seu código da função entrar
-        aguardar();
+        
 
         var emailVar = email_input.value;
         var senhaVar = senha_input.value;
@@ -70,7 +70,6 @@
         if (emailVar == "" || senhaVar == "") {
             cardErro.style.display = "block"
             mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-            finalizarAguardar();
             return false;
         }
         else {
@@ -94,14 +93,13 @@
 
             if (resposta.ok) {
                 console.log(resposta);
-
+                window.location.href = "/dashboard/dash.html";
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
 
                     setTimeout(function () {
                         window.location = "./dashboard/dash.html";
@@ -115,7 +113,6 @@
 
                 resposta.text().then(texto => {
                     console.error(texto);
-                    finalizarAguardar(texto);
                 });
             }
 

@@ -15,16 +15,17 @@
 <body>
     <div class="principal">
 
-        <!-- Painel do jogo (invisível até iniciar) -->
         <div id="painelJogo" style="display: block;">
             <h2 id="tituloPergunta"></h2>
 
             <div id="alternativas"></div>
-
-            <button id="btnProxima" style="display:none;">Próxima</button>
+            <div class="bts">
+                <button id="btnVoltar" style="display:none;">Voltar</button>
+                <!-- <button id="btnConfirmar" style="display:none;">Confirmar resposta</button> -->
+                <button id="btnProxima" style="display:none;">Próxima</button>
+            </div>
         </div>
 
-        <!-- Painel final -->
         <div id="painelFinal" style="display: none;">
             <h2>Resultado Final</h2>
 
@@ -37,7 +38,6 @@
 
     </div>
 
-    <script src="../js/quiz.js"></script>
 </body>
 <script>
     let questoes = [
@@ -50,71 +50,186 @@
         pergunta: "Qual desses NÃO é integrante dos Tribalistas?",
         alternativas: ["Marisa Monte", "Arnaldo Antunes", "Carlinhos Brown", "Djavan"],
         correta: 3
+    },
+    {
+        pergunta: "Qual é o nome do primeiro álbum dos Tribalistas?",
+        alternativas: ["Velha Infância", "Tribalistas", "Mistério da Vida", "Carnavália"],
+        correta: 1
+    },
+    {
+        pergunta: "Qual música dos Tribalistas contém o verso 'Meu coração é teu'?",
+        alternativas: ["Velha Infância", "Já Sei Namorar", "É Você", "Carnavália"],
+        correta: 0
+    },
+    {
+        pergunta: "Em que ano o segundo álbum dos Tribalistas foi lançado?",
+        alternativas: ["2017", "2014", "2010", "2019"],
+        correta: 0
+    },
+    {
+        pergunta: "Qual desses é um grande sucesso dos Tribalistas?",
+        alternativas: ["Velha Infância", "Sua Cara", "Amor I Love You", "Pra Me Refazer"],
+        correta: 0
+    },
+    {
+        pergunta: "Como é o nome da música que abre o álbum 'Tribalistas' de 2002?",
+        alternativas: ["É Você", "Carnavália", "O Amor é Feio", "Passe Em Casa"],
+        correta: 1
+    },
+    {
+        pergunta: "Qual destes gêneros musicais mais influenciam o som dos Tribalistas?",
+        alternativas: ["Axé", "MPB", "Sertanejo", "Rock"],
+        correta: 1
+    },
+    {
+        pergunta: "Quem é responsável pelos vocais principais em muitas músicas dos Tribalistas?",
+        alternativas: ["Arnaldo Antunes", "Marisa Monte", "Carlinhos Brown", "Todos revezam"],
+        correta: 3
+    },
+    {
+        pergunta: "Qual música dos Tribalistas foi tema de novela da Globo?",
+        alternativas: ["Já Sei Namorar", "Velha Infância", "É Você", "Carnavália"],
+        correta: 1
     }
 ];
 
-let indice = 0;
-let acertos = 0;
-let erros = 0;
 
-const tituloPergunta = document.getElementById("tituloPergunta");
-const alternativasDiv = document.getElementById("alternativas");
-const btnProxima = document.getElementById("btnProxima");
+    let indice = 0;
+    let acertos = 0;
+    let erros = 0;
 
-const painelJogo = document.getElementById("painelJogo");
-const painelFinal = document.getElementById("painelFinal");
+    // Armazena as respostas escolhidas para poder voltar
+    let respostasUsuario = {};
 
-carregarPergunta(); // ⚠ começa automático aqui!
+    const tituloPergunta = document.getElementById("tituloPergunta");
+    const alternativasDiv = document.getElementById("alternativas");
+    const btnProxima = document.getElementById("btnProxima");
+    const btnVoltar = document.getElementById("btnVoltar");
+    // const btnConfirmar = document.getElementById("btnConfirmar");
+    const painelJogo = document.getElementById("painelJogo");
+    const painelFinal = document.getElementById("painelFinal");
 
-function carregarPergunta() {
-    let q = questoes[indice];
+    carregarPergunta();
 
-    tituloPergunta.innerText = q.pergunta;
-    alternativasDiv.innerHTML = "";
-    btnProxima.style.display = "none";
+    function carregarPergunta() {
+        let q = questoes[indice];
 
-    q.alternativas.forEach((texto, i) => {
-        let alt = document.createElement("div");
-        alt.className = "alternativa";
-        alt.innerText = texto;
+        tituloPergunta.innerText = q.pergunta;
+        alternativasDiv.innerHTML = "";
 
-        alt.onclick = () => escolher(i);
+        // controla se o botão voltar aparece
+        btnVoltar.style.display = indice === 0 ? "none" : "block";
+        btnProxima.style.display = "none";
 
-        alternativasDiv.appendChild(alt);
-    });
-}
+        q.alternativas.forEach((texto, i) => {
+            let alt = document.createElement("div");
+            alt.className = "alternativa";
+            alt.innerText = texto;
 
-function escolher(i) {
-    let q = questoes[indice];
+            alt.onclick = () => escolher(i);
 
-    if (i === q.correta) acertos++;
-    else erros++;
+            // se o usuário já tinha respondido, marca visualmente
+            if (respostasUsuario[indice] === i) {
+                alt.style.backgroundColor = "#ffe0e0";
+                btnProxima.style.display = "block";
+            }
 
-    btnProxima.style.display = "block";
-}
-
-btnProxima.onclick = () => {
-    indice++;
-
-    if (indice >= questoes.length) {
-        finalizar();
-    } else {
-        carregarPergunta();
+            alternativasDiv.appendChild(alt);
+        });
     }
-};
 
-function finalizar() {
-    painelJogo.style.display = "block";
-    painelFinal.style.display = "block";
+    function escolher(i) {
+        let q = questoes[indice];
 
-    document.getElementById("spanCertas").innerText = acertos;
-    document.getElementById("spanErradas").innerText = erros;
-    document.getElementById("spanPontuacaoFinal").innerText = acertos * 10;
-}
+        // se já respondeu antes, remover efeito anterior
+        if (respostasUsuario[indice] !== undefined) {
+            let anterior = respostasUsuario[indice];
+            let alternativas = document.getElementsByClassName("alternativa");
+            alternativas[anterior].style.backgroundColor = "#FFEDED";
+        }
 
-document.getElementById("btnReiniciar").onclick = () => {
-     window.location.href = "quiz.html";
-};
+        // salva resposta
+        respostasUsuario[indice] = i;
+
+        // marca visualmente
+        let alternativas = document.getElementsByClassName("alternativa");
+        alternativas[i].style.backgroundColor = "var(--Vermelho-suave)";
+
+        btnProxima.style.display = "block";
+    }
+
+    btnProxima.onclick = () => {
+        indice++;
+
+        if (indice >= questoes.length) {
+            finalizar();
+        } else {
+            carregarPergunta();
+        }
+    };
+
+    btnVoltar.onclick = () => {
+        if (indice > 0) {
+            indice--;
+            carregarPergunta();
+        }
+    };
+
+    function finalizar() {
+        painelJogo.style.display = "none";
+        painelFinal.style.display = "block";
+
+        // calcular acertos reais
+        for (let i = 0; i < questoes.length; i++) {
+            if (respostasUsuario[i] === questoes[i].correta) {
+                acertos++;
+            } else {
+                erros++;
+            }
+        }
+        
+        document.getElementById("spanCertas").innerText = acertos;
+        document.getElementById("spanErradas").innerText = erros;
+        document.getElementById("spanPontuacaoFinal").innerText = acertos * 10;
+
+        var idVar = sessionStorage.ID_USUARIO;
+        var idQuizVar = 1
+        
+    fetch("/quiz/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        
+        idSever: idVar,
+        quizServer: idQuizVar,
+        acertosServer: acertos,
+        errosServer: erros
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+            console.log("estou no the() reposta")
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    return false;
+    }
+
+    document.getElementById("btnReiniciar").onclick = () => {
+        window.location.href = "quiz.html";
+    };
 
 </script>
+
 </html>

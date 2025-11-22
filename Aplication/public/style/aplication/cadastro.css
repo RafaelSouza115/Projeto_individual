@@ -2,16 +2,14 @@
 body {
     overflow: hidden;
     min-height: 100vh;
+
     background-image: url('../../assets/imgs/fundolongincasd_upscayl_2x_upscayl-standard-4x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
-    font-family: "Poppins", sans-serif;
-    /* remove espaçamentos */
 }
 
-/* ===== LOGO ===== */
 .logo {
     width: 75px;
     height: auto;
@@ -19,37 +17,38 @@ body {
     margin: 25px 0 0 35px;
 }
 
-/* ===== CONTAINER PRINCIPAL ===== */
-.container {
-    height: calc(90vh - 120px);
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    /* centraliza horizontalmente */
-    align-items: center;
-    /* centraliza verticalmente   */
-}
-
-
 .login-side {
-    width: 100%;
-    max-width: 450px;
-    padding: 40px;
-    border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(3px);
+    width: 37%;
+    margin: -95px auto;
+    padding: 5px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
-
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-around;
-
+    border-radius: 15px;
+    background-color: var(--fundo-div);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
 }
 
-/* ===== TÍTULO ===== */
+.login-side h2 span {
+    color: var(--botao);
+}
+
+.divp {
+    margin: 0 120px;
+    text-align: center;
+}
+
+.input-group select {
+     width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
 .tit {
     text-align: center;
     font-size: 28px;
@@ -57,14 +56,15 @@ body {
     font-weight: 700;
 }
 
-/* ===== LABELS ===== */
+.tit span{
+    color: var(--botao);
+}
 label {
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 6px;
 }
 
-/* ===== INPUTS ===== */
 input {
     width: 100%;
     padding: 12px;
@@ -76,15 +76,14 @@ input {
 }
 
 input:focus {
-    border-color: var(--vermelhao);
+    border-color: var(--botao);
     box-shadow: 0 0 8px rgba(0, 0, 0, .2);
 }
 
-/* ===== BOTÃO ===== */
 button {
     width: 100%;
     padding: 14px;
-    background-color: var(--vermelhao);
+    background-color: var(--botao);
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -94,10 +93,9 @@ button {
 }
 
 button:hover {
-    background-color: var(--Vermelho-Escuro);
+    background-color: var(--trans-botao);
 }
 
-/* ===== TEXTO DE LOGIN ===== */
 .login-text {
     text-align: center;
     margin-top: 20px;
@@ -105,7 +103,7 @@ button:hover {
 }
 
 .login-text a {
-    color: var(--vermelhao);
+    color: var(--botao);
     font-weight: bold;
     text-decoration: none;
 }
@@ -114,7 +112,6 @@ button:hover {
     text-decoration: underline;
 }
 
-/* ===== RESPONSIVO ===== */
 @media (max-width: 600px) {
     .container {
         padding: 0 20px;
@@ -137,7 +134,7 @@ button:hover {
 }
 
 .register a {
-    color: var(--Vermelho-Escuro);
+    color: var(--trans-botao);
     font-weight: 600;
     text-decoration: none;
 }
@@ -158,7 +155,7 @@ button:hover {
 .card_erro {
     display: none;
     background-color: #f8d7da;
-    color: var(--vermelhao);
+    color: var(--botao);
     padding: 10px 20px;
     border: 1px solid #f5c6cb;
     border-radius: 0 0 5px 5px;
@@ -167,7 +164,6 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* ===== LOADING ===== */
 .loading-div {
     display: none;
     text-align: center;

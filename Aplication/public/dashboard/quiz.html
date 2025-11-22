@@ -1,24 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/dash/quiz.css">
-    <link rel="stylesheet" href="../style/dash/nav.css">
+
     <title> Rebobinando | Quiz </title>
 </head>
 
-<body>
-    <nav>
-        <li>
-            <a href="dash.html"> Home</a>
-        </li>
-        <li>
-            <a href="quiz.html"> Quiz</a>
-        </li>
-    </nav>
+<body onload="listarUsuarios()">
+
+    <div class="principal">
+
+        <div class="container_id1">
+
+            <div class="container-box1">
+
+                <h2 id="divOla"></h2>
+
+                <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+
+            </div>
+
+
+
+            <div class="container-box2">
+                <table class="tabela-rank">
+                    <thead>
+                        <tr>
+                            <th>Colocação</th>
+                            <th>Nome</th>
+                            <th>Pontuação</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabelaUsuarios">
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+        <nav>
+            <li><a href="dash.html"> Home</a></li>
+            <li><a href="quiz.html"> Quiz</a></li>
+        </nav>
+    </div>
 </body>
+<script>
+
+    const nome = sessionStorage.NOME_USUARIO;
+
+    document.getElementById("divOla").innerHTML = `<p>Olá ${nome}, faça o nosso quiz e veja seus resultados! <br>
+         é aqui que você testa seu conhecimento sobre os tribalistas, e tem um retorno sobre ele.</p>`;
+
+    function listarUsuarios() {
+        let tabela = document.getElementById("tabelaUsuarios");
+
+        fetch("/dash/listar", {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(function (response) {
+                if (response.ok) {
+
+                    tabela.innerHTML = "";
+                    let posicao = 1;
+
+                    response.json().then(function (resposta) {
+
+                        // Preencher usuários que vieram da API
+                        resposta.forEach(u => {
+                            if (posicao <= 10) {
+                                tabela.innerHTML += `
+                            <tr>
+                                <td>${posicao}º</td>
+                                <td>${u.nome}</td>
+                                <td>${u.pontuacao}</td>
+                            </tr>
+                        `;
+                            }
+                            posicao++;
+                        });
+
+                        // Completar até o 10º lugar com ---
+                        while (posicao <= 10) {
+                            tabela.innerHTML += `
+                        <tr>
+                            <td>${posicao}º</td>
+                            <td>---</td>
+                            <td>---</td>
+                        </tr>
+                    `;
+                            posicao++;
+                        }
+
+                    });
+
+                } else {
+                    console.error('nenhum dado');
+                }
+            })
+            .catch(function (error) {
+                console.error('erro na obtenção de dados');
+            });
+    }
+
+
+
+    function iniciarQuiz() {
+        window.location.href = "paginaQuizPerguntas.html";
+    }
+
+</script>
 
 </html>

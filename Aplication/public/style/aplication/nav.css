@@ -54,13 +54,13 @@
 }
 
 .navbar a:hover {
-    color: var(--vermelhao);
+    color: var(--botao);
     transform: translateY(-3px);
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 #cadastro {
-    background-color: var(--vermelhao);
+    background-color: var(--botao);
     color: white;
     font-weight: 600;
     padding: 10px 20px;
@@ -71,7 +71,7 @@
 }
 
 #cadastro:hover {
-    background-color: var(--Vermelho-Escuro);
+    background-color: var(--trans-botao);
     transform: translateY(-4px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
